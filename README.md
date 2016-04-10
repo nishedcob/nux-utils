@@ -49,3 +49,17 @@ Soon I realized that I was using my Tar-XZ idiom no just on folders, which I had
 `$ cfxz file_I_want.compressed`
 
 Output: `file_I_want.compressed.xz`
+
+## Compress File with XZ then Remove (CFXZRM)
+
+Following the same line of thought behind `txzrm` and `cfxz`, once I had built the `cfxz` idiom, it made sense to build its archiving cousin `cfxzrm` who carries out the same functionality, but on a successful compression deletes the source file.
+
+### Required Dependencies:
+* All of `cfxz`'s dependencies: `dd`, `pv`, `du`, `xz`
+* `rm` (for deleting files, this is a standard \*nix utility)
+
+### Usage:
+
+`$ cfxzrm file_I_want.compressed`
+
+Output: `file_I_want.compressed.xz` and `file_I_want.compressed` is deleted from the filesystem.
