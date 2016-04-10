@@ -1,0 +1,3 @@
+#!/bin/bash
+dd if="$1" | pv -s $(du -sb "$1" | awk '{print $1}') | xz -9e -c - > "$1.xz" && xz -tv "$1.xz"
+
