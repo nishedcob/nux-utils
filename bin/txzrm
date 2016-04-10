@@ -1,0 +1,2 @@
+#!/bin/bash
+tar -cf - "$1" | pv -s $(du -sb "$1" | awk '{print $1}') | xz -9e -c - > "$1.txz" && xz -tv "$1.txz" && rm -Rv "$1"
