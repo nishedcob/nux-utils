@@ -2,6 +2,15 @@
 
 This project has been in the making a long time, ever since I started writing my own Shell One-Line Idioms and throwing them in my system bin folder. This repository is a collection of those Idioms. Pull-requests are welcome, one utility per commit; I am not an expert in Shell scripting, improvements would be lovely.
 
+## Installation
+If I get the chance at some point, it would be nice to write a generic installation script, maybe based on `rsync`, but until then, to install on any \*nix system, you are going to need to copy the binaries you want into your `$PATH`, this is a matter of personal preference, but I prefer `/bin`. In addition, if you don't have `bash` at the location of `/bin/bash`, you will need to change the shebang (`#!`) lines to point to your local `bash` or a `bash` compatible shell like `zsh`. You can find the location of any binary in your `$PATH` with the command `which`. If you are running on OSX, these scripts were designed for Linux and thus will require some modifications, `du` on OSX does not support the `-b` flag so the `-b` flag should be replaced with a `-k` flag and a `k` added at the end of the temporary `du/awk` variable. Therefore, `txz` becomes the following on OSX:
+  * `tar -cf - "$1" | pv -s $(du -sk "$1" | awk '{print $1}')k | xz -9e -c - > "$1".txz && xz -tv "$1".txz`
+
+From this on Linux:
+  * `tar -cf - "$1" | pv -s $(du -sb "$1" | awk '{print $1}') | xz -9e -c - > "$1".txz && xz -tv "$1".txz`
+
+In addition, if running a Mac, you will need to install via Homebrew, `pv` and if you want the XZ Family, `xz`.
+
 ## The XZ Family
 These Idioms serve as wrappers for my favorite compressor, `XZ`, running on its highest possible setting, `-9e`, with added functionality such as `tar`ing up folders and/or adding a progress bar for those of us who are impatient.
 
