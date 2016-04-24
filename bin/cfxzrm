@@ -1,3 +1,26 @@
 #!/bin/bash
-dd if="$1" | pv -s $(du -sb "$1" | awk '{print $1}') | xz -9e -c - > "$1.xz" && xz -tv "$1.xz" && rm -v "$1"
+#    Compress a File with XZ on maximum extreme settings (-9e), show compression
+#    progress, delete original afterwords
+#    Copyright (C) 2016  Neptune Nyx Nishedcob
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+echo "NUX-BIN:cfxzrm  Copyright (C) 2016  Neptune Nyx Nishedcob
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions.
 
+Usage:
+    cfxzrm file_I_want_to.compress
+"
+dd if="$1" | pv -s $(du -sb "$1" | awk '{print $1}') | xz -9e -c - > "$1.xz" && xz -tv "$1.xz" && rm -v "$1"

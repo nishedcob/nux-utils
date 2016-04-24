@@ -2,6 +2,20 @@
 
 This project has been in the making a long time, ever since I started writing my own Shell One-Line Idioms and throwing them in my system bin folder. This repository is a collection of those Idioms. Pull-requests are welcome, one utility per commit; I am not an expert in Shell scripting, improvements would be lovely.
 
+## License
+The contents of this repository are licensed under the [GNU GPLv3](LICENSE), and as such, as a user you have 4 basic freedoms ([See GNU's Definition of Free Software](https://www.gnu.org/philosophy/free-sw.en.html)):
+* The freedom to run the program as you wish, for any purpose (freedom 0).
+* The freedom to study how the program works, and change it so it does your computing as you wish (freedom 1).
+* The freedom to redistribute copies so you can help your neighbor (freedom 2).
+* The freedom to distribute copies of your modified versions to others (freedom 3). By doing this you can give the whole community a chance to benefit from your changes.
+
+Under this license, as a user you agree to the following:
+* Redistribution must include the [source code](bin/) and a copy of the original [license](LICENSE)
+* You may not change the license
+* Any changes you make should be explicitly stated in some form for the end user
+
+You may find out more at [choosealicense.com](http://choosealicense.com/licenses/gpl-3.0/#).
+
 ## Installation
 If I get the chance at some point, it would be nice to write a generic installation script, maybe based on `rsync`, but until then, to install on any \*nix system, you are going to need to copy the binaries you want into your `$PATH`, this is a matter of personal preference, but I prefer `/bin`. In addition, if you don't have `bash` at the location of `/bin/bash`, you will need to change the shebang (`#!`) lines to point to your local `bash` or a `bash` compatible shell like `zsh`. You can find the location of any binary in your `$PATH` with the command `which`. If you are running on OSX, these scripts were designed for Linux and thus will require some modifications, `du` on OSX does not support the `-b` flag so the `-b` flag should be replaced with a `-k` flag and a `k` added at the end of the temporary `du/awk` variable. Therefore, `txz` becomes the following on OSX:
   * `tar -cf - "$1" | pv -s $(du -sk "$1" | awk '{print $1}')k | xz -9e -c - > "$1".txz && xz -tv "$1".txz`
