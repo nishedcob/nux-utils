@@ -96,7 +96,7 @@ Output: `file_I_want.compressed.xz` and `file_I_want.compressed` is deleted from
 `dd` is one of my favorite utilities in part because it is so versatile in what you can use it to do.
 
 ### DD with Progress Bar (ddpv)
-In my community, I am considered to be everyone's local "Linux Expert", so when people do decide that they want to give Linux a try, often they come to me so that I will prepare them a live USB stick using a live hybrid iso. `dd` is classically the solution when it comes to burning a live USB and by far what I prefer to use, however, its lack of any indication of progress I found to be troubling, especially given the power and potential behind `dd`. The people I burn USB Sticks for, didn't like the lack of an indication of progress either, nor did they like the standard signal based response based on `watch`/`kill` so after giving it some thought and realizing that I was already occupying a idiom-like incantation everytime I burned a USB, I decided to make it an idiom on its own, `ddpv`, the perfect union between `dd` and `pv` for showing progress whenever you decide to make a live USB stick (I imagine it could be used for other things too, like perhaps burning CDs and DVDs).
+In my community, I am considered to be everyone's local "Linux Expert", so when people do decide that they want to give Linux a try, often they come to me so that I will prepare them a live USB stick using a live hybrid iso. `dd` is classically the solution when it comes to burning a live USB and by far what I prefer to use, however, its lack of any indication of progress I found to be troubling, especially given the power and potential behind `dd`. The people I burn USB Sticks for, didn't like the lack of an indication of progress either, nor did they like the standard signal based response based on `watch`/`kill` so after giving it some thought and realizing that I was already occupying a idiom-like incantation every time I burned a USB, I decided to make it an idiom on its own, `ddpv`, the perfect union between `dd` and `pv` for showing progress whenever you decide to make a live USB stick (I imagine it could be used for other things too, like perhaps burning CDs and DVDs).
 
 #### Required Dependencies:
 * `dd` (for reading and placing raw file data into the pipe and should be on virtually all \*nix systems as it is a standard utility)
@@ -110,3 +110,41 @@ In my community, I am considered to be everyone's local "Linux Expert", so when 
 `$ ddpv source.image destination.image`
 
 Output: `destination.image` should reflect `source.image` byte for byte
+
+## The SU Family
+Despite all the people who firmly believe that `SUDO` is superior to `SU`, it is my belief that, at the very least in my use case, personal use computing where I am the only administrator, I prefer the inherent security provided by having a separate login for my root user in addition to the additional responsibility that comes from using `SU`. All too often I have seen my peers screw up their systems because they lack a full understanding and respect for what `SUDO` does. Now perhaps they would make all the same mistakes if they used `SU`, however I think once a user comes to understand that what they are doing is escalating privileges and running as a different user, their perspective changes and they suddenly understand that they need trend more carefully. To further complicate my use case, occasionally, I share my password with others so that they may unlock my machine in the middle of presentations and the like. For this use case, I change my password to something very weak via `passwd` in confidence that they will not have root access. So perhaps `su` isn't for everyone, but `sudo` isn't either, but in my case `su` and the peace of mind that it gives me is a nice fit.
+
+### Makepkg with SU (makepkg.su)
+I am a recent convert to Archlinux as my full time system and love compiling packages out of the AUR, however upon discovering that Makepkg calls `SUDO` if it finds it on your system (I do use `sudo -iu user` for changing users, I could just as easily use `su - user`, but out of habit I use `sudo` more often to switch users and `su` always for privilege escalation), I was a bit repulsed and horrified, so I edited the script to never call `su` by modifying the condition of a single `if` statement. The original line is commented (see line 227, 228 for the modification I have made to my `Makepkg`).
+
+#### Required Dependencies:
+If Archlinux's vanilla `makepkg` works on your system, my modified version, `makepkg.su` should work as well.
+
+Officially these dependencies are listed as:
+* awk
+* bsdtar (libarchive)
+* bzip2
+* coreutils
+* fakeroot
+* file
+* find (findutils)
+* gettext
+* gpg
+* grep
+* gzip
+* openssl
+* sed
+* tput (ncurses)
+* xz
+
+#### Usage:
+Where I have made a minimal change to `Makepkg` in order to better serve my personal philosophy on security and the `su` vs. `sudo` debate. My typical personal usage is:
+
+`$ makepkg.su -si`
+
+where:
+
+* `-s` installs dependencies that the package you are building requires.
+* `-i` installs the package after you build it.
+
+Output: AUR package installed on your system.
