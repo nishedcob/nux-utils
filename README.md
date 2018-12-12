@@ -148,3 +148,11 @@ where:
 * `-i` installs the package after you build it.
 
 Output: AUR package installed on your system.
+
+## Data Utilities
+
+This family of utilities is a loose set of tools that I have developed and chosen to publish for the sake of helping others in mundane and perhaps common data manipulation tasks.
+
+### CSV Merge Tool (csv_merge.py)
+
+This tool merges any number of CSV files into a single CSV file provided as the final argument. If so desired, uniqueness across rows may be enforced at the same time.
